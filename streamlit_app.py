@@ -25,14 +25,17 @@ def predict(model, X_test):
 file_uploaded = False
 df = None
 
+# while working in codespaces -> "dataset.csv"
+# while commiting to main app -> "/dataset.csv"
+
 # Sidebar for navigation
 with st.sidebar:
     st.title('Steps in Running the Model')
     choice = st.radio("Navigation", ['Home Page', 'Upload File', 'Data Profiling', 'Model Building', 'Download'])
     st.info('This app will do something')
 
-if os.path.exists("/workspaces/autoML/dataset.csv"): 
-    df = pd.read_csv('/workspaces/autoML/dataset.csv', index_col=None)
+if os.path.exists("dataset.csv"): 
+    df = pd.read_csv('dataset.csv', index_col=None)
 
 # Main content based on navigation choice
 if choice == 'Home Page':
@@ -45,7 +48,7 @@ if choice == "Upload File":
     if file is not None:  # Corrected 'none' to 'None'
         st.write('worked!')
         df = pd.read_csv(file)  # Removed 'index_col=None'
-        df.to_csv('/workspaces/autoML/dataset.csv', index=False)  # Changed 'index=None' to 'index=False'
+        df.to_csv('dataset.csv', index=False)  # Changed 'index=None' to 'index=False'
         file_uploaded = True  # Corrected 'true' to 'True'
         st.dataframe(df)
 
@@ -58,8 +61,8 @@ if choice == "Upload File":
 #         st.dataframe(df)
 
 if choice == "Data Profiling": 
-    if os.path.exists("/workspaces/autoML/dataset.csv"):
-        df = pd.read_csv('/workspaces/autoML/dataset.csv')
+    if os.path.exists("dataset.csv"):
+        df = pd.read_csv('dataset.csv')
         pr = df.profile_report()
         st.title("Profiling in Streamlit")
         st.write(df)
@@ -68,9 +71,9 @@ if choice == "Data Profiling":
         st.write('No data')
 
 if choice == 'Model Building':
-    if os.path.exists("/workspaces/autoML/dataset.csv"):
+    if os.path.exists("dataset.csv"):
         st.title("Auto Machine Learning - Model Building")
-        data = pd.read_csv('/workspaces/autoML/dataset.csv', index_col=None)
+        data = pd.read_csv('dataset.csv', index_col=None)
 
         # Selecting target variable
         target = st.selectbox("Select target variable", data.columns)
